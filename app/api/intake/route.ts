@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { bereken } from "@/lib/calculator";
 import { postcodeNaarAfstand } from "@/lib/distance";
+import { sendNotificationEmail, sendOfferteEmail } from "@/lib/email";
 import { prisma } from "@/lib/prisma";
 
 const MAX_AFSTAND_KM = 25;
@@ -137,6 +138,7 @@ export async function POST(request: Request) {
         })),
       },
     },
+    include: { ramen: true },
   });
 
   console.log(
@@ -144,6 +146,27 @@ export async function POST(request: Request) {
       `${ramenMeters.length} raam/ramen, afstand ${afstandKm ?? "onbekend"} km, ` +
       `klantprijs €${resultaat.klantprijs ?? "-"}, status ${status}`,
   );
+
+  // E-mails versturen — losstaand van de DB-opslag: een mislukte mail mag
+  // de aanvraag niet ongedaan maken.
+  try {
+    const offertePerMail =
+      autoQuote && aanvraag.contactvoorkeur === "email";
+
+    if (offertePerMail) {
+      const offerte = await sendOfferteEmail(aanvraag, aanvraag.ramen);
+      if (offerte.verzonden) {
+        await prisma.aanvraag.update({
+          where: { id: aanvraag.id },
+          data: { emailSentAt: new Date() },
+        });
+      }
+    }
+
+    await sendNotificationEmail(aanvraag, aanvraag.ramen);
+  } catch (fout) {
+    console.error(`[intake] e-mail versturen mislukt voor ${aanvraag.id}:`, fout);
+  }
 
   return NextResponse.json({
     id: aanvraag.id,

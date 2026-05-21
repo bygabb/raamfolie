@@ -13,6 +13,7 @@ datasource db {
 model Aanvraag {
   id              String   @id @default(cuid())
   createdAt       DateTime @default(now())
+  token           String   @unique @default(cuid())
   klanttype       String
   doel            String
   postcode        String
@@ -30,6 +31,10 @@ model Aanvraag {
   autoQuote       Boolean  @default(false)
   flags           String   @default("[]")
   status          String   @default("nieuw")
+  emailSentAt     DateTime?
+  acceptedAt      DateTime?
+  acceptedIp      String?
+  rejectedAt      DateTime?
   ramen           Raam[]
 }
 
