@@ -92,17 +92,23 @@ export async function sendOfferteEmail(
 export async function sendNotificationEmail(
   aanvraag: AanvraagModel,
   ramen: RaamModel[],
+  opties: { handmatig?: boolean } = {},
 ): Promise<EmailResultaat> {
   // De offerte gaat alleen automatisch per mail bij auto-quote + e-mailvoorkeur.
   const offerteVerzonden =
     aanvraag.autoQuote && aanvraag.contactvoorkeur === "email";
-  const prefix = aanvraag.autoQuote ? "[AUTO]" : "[REVIEW]";
+  const prefix = opties.handmatig
+    ? "[VERZONDEN]"
+    : aanvraag.autoQuote
+      ? "[AUTO]"
+      : "[REVIEW]";
   const html = await render(
     NotificationEmail({
       aanvraag,
       ramen,
       offerteVerzonden,
       adminUrl: `${BASE_URL}/admin`,
+      handmatig: opties.handmatig,
     }),
   );
   return verstuur({

@@ -29,6 +29,19 @@ export function nlDatumTijd(datum: Date): string {
   return datumTijdFormatter.format(datum);
 }
 
+// Korte, leesbare relatieve tijd in het Nederlands.
+export function relatieveTijd(datum: Date): string {
+  const verschilSec = Math.round((Date.now() - datum.getTime()) / 1000);
+  if (verschilSec < 60) return "zojuist";
+  const min = Math.round(verschilSec / 60);
+  if (min < 60) return `${min} min geleden`;
+  const uur = Math.round(min / 60);
+  if (uur < 24) return `${uur} uur geleden`;
+  const dagen = Math.round(uur / 24);
+  if (dagen < 14) return `${dagen} ${dagen === 1 ? "dag" : "dagen"} geleden`;
+  return nlDatum(datum);
+}
+
 export const BTW_TARIEF = 0.21;
 
 // Berekent de offerte-bedragen vanuit de klantprijs (excl. BTW).

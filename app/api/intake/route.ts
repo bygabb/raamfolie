@@ -158,7 +158,7 @@ export async function POST(request: Request) {
       if (offerte.verzonden) {
         await prisma.aanvraag.update({
           where: { id: aanvraag.id },
-          data: { emailSentAt: new Date() },
+          data: { emailSentAt: new Date(), status: "verzonden" },
         });
       }
     }

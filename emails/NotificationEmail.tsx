@@ -72,6 +72,7 @@ export type NotificationEmailProps = {
   ramen: RaamModel[];
   offerteVerzonden: boolean;
   adminUrl: string;
+  handmatig?: boolean;
 };
 
 function Rij({ label, waarde }: { label: string; waarde: string }) {
@@ -88,6 +89,7 @@ export function NotificationEmail({
   ramen,
   offerteVerzonden,
   adminUrl,
+  handmatig = false,
 }: NotificationEmailProps) {
   const m2Totaal = ramen.reduce((som, r) => som + r.breedteM * r.hoogteM, 0);
   const flags: string[] = (() => {
@@ -177,7 +179,14 @@ export function NotificationEmail({
 
           <Hr style={{ borderColor: kleuren.rand, margin: "20px 0 0" }} />
 
-          {aanvraag.autoQuote ? (
+          {handmatig ? (
+            <Text
+              style={{ ...styles.melding, backgroundColor: "#f0fdfa", color: "#0f766e" }}
+            >
+              Offerte handmatig verzonden door de beheerder op{" "}
+              {nlDatumTijd(new Date(aanvraag.emailSentAt ?? new Date()))}.
+            </Text>
+          ) : aanvraag.autoQuote ? (
             offerteVerzonden ? (
               <Text
                 style={{ ...styles.melding, backgroundColor: "#ecfdf5", color: "#065f46" }}
