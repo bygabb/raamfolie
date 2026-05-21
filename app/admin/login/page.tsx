@@ -37,19 +37,23 @@ export default function AdminLoginPage() {
   }
 
   return (
-    <main className="flex min-h-screen items-center justify-center p-4">
-      <Card className="w-full max-w-sm">
-        <CardContent className="flex flex-col gap-5">
+    <main className="flex min-h-screen items-center justify-center bg-surface-2 p-4">
+      <Card variant="white" className="w-full max-w-sm">
+        <CardContent className="gap-5">
           <header className="flex flex-col gap-1">
-            <h1 className="text-lg font-semibold">Signs.nl admin</h1>
-            <p className="text-sm text-muted-foreground">
+            <h1 className="font-display text-xl font-semibold text-ink">
+              Signs.nl admin
+            </h1>
+            <p className="text-sm text-body">
               Log in om aanvragen te bekijken.
             </p>
           </header>
 
           <form onSubmit={inloggen} className="flex flex-col gap-4">
             <div className="flex flex-col gap-1.5">
-              <Label htmlFor="wachtwoord">Wachtwoord</Label>
+              <Label htmlFor="wachtwoord" className="text-sm font-medium text-ink">
+                Wachtwoord
+              </Label>
               <Input
                 id="wachtwoord"
                 type="password"

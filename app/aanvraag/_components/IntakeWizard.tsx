@@ -61,7 +61,7 @@ export function IntakeWizard() {
   }
 
   return (
-    <main className="mx-auto flex w-full max-w-[480px] flex-col px-4 py-8">
+    <div className="flex w-full flex-col">
       {stap === 1 && (
         <Stap1 data={data} update={update} onVolgende={() => setStap(2)} />
       )}
@@ -94,6 +94,6 @@ export function IntakeWizard() {
           fout={fout}
         />
       )}
-    </main>
+    </div>
   );
 }

@@ -117,14 +117,49 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+/* Signs.nl brand tokens — Tailwind v4 (@theme), vertaald uit het
+   gevraagde tailwind.config.ts omdat dit project Tailwind v4 gebruikt. */
+@theme {
+  --color-ink: #131519;
+  --color-body: #82878e;
+  --color-meta: #a7acb2;
+  --color-brand-border: #d0d9dd;
+  --color-surface-2: #f1f8f8;
+  --color-accent: #00dfe7;
+  --color-accent-dark: #00abb1;
+  --color-link: #002396;
+  --color-link-hover: #001b72;
+  --color-dark: #060709;
+  --color-dark-2: #111418;
+  --color-whatsapp: #25d366;
+
+  --font-display: var(--font-bricolage), sans-serif;
+  --font-sans: var(--font-kumbh), sans-serif;
+
+  --radius-brand: 20px;
+  --radius-brand-lg: 40px;
+
+  --tracking-tight-1: -0.4px;
+  --tracking-tight-2: -1px;
+  --tracking-tight-3: -2px;
+  --tracking-tight-4: -3px;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-white font-sans text-ink;
+    line-height: 1.6;
   }
-  html {
-    @apply font-sans;
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display tracking-tight-2;
+  }
+  h1 {
+    @apply tracking-tight-3 md:tracking-tight-4;
   }
 }

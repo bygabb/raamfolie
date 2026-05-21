@@ -2,9 +2,9 @@ import {
   Body,
   Button,
   Container,
+  Font,
   Head,
   Heading,
-  Hr,
   Html,
   Preview,
   Section,
@@ -13,79 +13,86 @@ import {
 import type { AanvraagModel, RaamModel } from "@/lib/generated/prisma/models";
 import { euro, nlDatum, offerteBedragen } from "@/lib/format";
 
-const kleuren = {
-  tekst: "#1f2937",
-  zacht: "#6b7280",
-  rand: "#e5e7eb",
-  accent: "#1e3a5f",
-};
+const INK = "#131519";
+const BODY = "#82878e";
+const META = "#a7acb2";
+const SURFACE = "#f1f8f8";
+const RAND = "#d0d9dd";
+
+const DISPLAY = "'Bricolage Grotesque', sans-serif";
+const SANS = "'Kumbh Sans', Arial, Helvetica, sans-serif";
 
 const styles = {
   body: {
-    backgroundColor: "#f3f4f6",
-    fontFamily: "Arial, Helvetica, sans-serif",
+    backgroundColor: "#ffffff",
+    fontFamily: SANS,
     margin: "0",
     padding: "24px 0",
   },
   container: {
-    backgroundColor: "#ffffff",
-    border: `1px solid ${kleuren.rand}`,
-    borderRadius: "8px",
     margin: "0 auto",
     maxWidth: "600px",
-    padding: "32px",
+    padding: "24px",
   },
   heading: {
-    color: kleuren.tekst,
-    fontSize: "20px",
-    fontWeight: "bold" as const,
+    color: INK,
+    fontFamily: DISPLAY,
+    fontSize: "26px",
+    fontWeight: "700" as const,
+    letterSpacing: "-1px",
     margin: "0 0 16px",
   },
   tekst: {
-    color: kleuren.tekst,
-    fontSize: "14px",
-    lineHeight: "22px",
-    margin: "0 0 12px",
+    color: BODY,
+    fontSize: "15px",
+    lineHeight: "24px",
+    margin: "0 0 16px",
+  },
+  kaart: {
+    backgroundColor: SURFACE,
+    borderRadius: "20px",
+    margin: "0 0 20px",
+    padding: "24px",
   },
   th: {
-    borderBottom: `2px solid ${kleuren.rand}`,
-    color: kleuren.zacht,
+    color: META,
     fontSize: "12px",
-    padding: "8px 4px",
+    padding: "0 4px 10px",
     textAlign: "left" as const,
   },
   td: {
-    borderBottom: `1px solid ${kleuren.rand}`,
-    color: kleuren.tekst,
-    fontSize: "13px",
-    padding: "8px 4px",
+    borderTop: `1px solid ${RAND}`,
+    color: INK,
+    fontSize: "14px",
+    padding: "10px 4px",
   },
   totaalLabel: {
-    color: kleuren.zacht,
-    fontSize: "13px",
-    padding: "4px 4px",
+    color: BODY,
+    fontSize: "14px",
+    padding: "3px 4px",
     textAlign: "right" as const,
   },
   totaalWaarde: {
-    color: kleuren.tekst,
-    fontSize: "13px",
-    padding: "4px 4px",
+    color: INK,
+    fontSize: "14px",
+    padding: "3px 4px",
     textAlign: "right" as const,
-    width: "120px",
+    width: "130px",
   },
   button: {
-    backgroundColor: kleuren.accent,
-    borderRadius: "6px",
+    backgroundColor: INK,
+    borderRadius: "20px",
     color: "#ffffff",
     display: "block",
+    fontFamily: DISPLAY,
     fontSize: "15px",
-    fontWeight: "bold" as const,
-    padding: "14px 24px",
+    fontWeight: "600" as const,
+    padding: "14px 28px",
     textAlign: "center" as const,
     textDecoration: "none",
   },
   footer: {
-    color: kleuren.zacht,
+    color: META,
     fontSize: "12px",
     lineHeight: "18px",
     margin: "0",
@@ -106,51 +113,68 @@ export function OfferteEmail({ aanvraag, ramen, offerteUrl }: OfferteEmailProps)
 
   return (
     <Html lang="nl">
-      <Head />
-      <Preview>Uw vrijblijvende raamfolie offerte van Signs.nl</Preview>
+      <Head>
+        <Font
+          fontFamily="Bricolage Grotesque"
+          fallbackFontFamily="sans-serif"
+          fontWeight={700}
+        />
+        <Font
+          fontFamily="Kumbh Sans"
+          fallbackFontFamily="sans-serif"
+          fontWeight={400}
+        />
+      </Head>
+      <Preview>Je vrijblijvende raamfolie offerte van Signs.nl</Preview>
       <Body style={styles.body}>
         <Container style={styles.container}>
           <Heading style={styles.heading}>
-            Uw raamfolie offerte van Signs.nl
+            Je raamfolie offerte van Signs.nl
           </Heading>
 
           <Text style={styles.tekst}>
-            Beste {aanvraag.voornaam}, bedankt voor uw aanvraag. Hierbij uw
+            Hi {aanvraag.voornaam}, bedankt voor je aanvraag. Hierbij je
             vrijblijvende offerte voor de installatie van raamfolie.
           </Text>
 
-          <table
-            width="100%"
-            cellPadding={0}
-            cellSpacing={0}
-            style={{ borderCollapse: "collapse", margin: "16px 0" }}
-          >
-            <thead>
-              <tr>
-                <th style={styles.th}>Raam</th>
-                <th style={styles.th}>Afmeting</th>
-                <th style={{ ...styles.th, textAlign: "right" }}>m&sup2;</th>
-              </tr>
-            </thead>
-            <tbody>
-              {ramen.map((raam, index) => {
-                const breedteCm = Math.round(raam.breedteM * 100);
-                const hoogteCm = Math.round(raam.hoogteM * 100);
-                const m2 = raam.breedteM * raam.hoogteM;
-                return (
-                  <tr key={raam.id}>
-                    <td style={styles.td}>{raam.naam || `Raam ${index + 1}`}</td>
-                    <td style={styles.td}>
-                      {breedteCm}&times;{hoogteCm} cm
-                    </td>
-                    <td style={{ ...styles.td, textAlign: "right" }}>
-                      {m2.toFixed(2)}
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+          <Section style={styles.kaart}>
+            <table
+              width="100%"
+              cellPadding={0}
+              cellSpacing={0}
+              style={{ borderCollapse: "collapse" }}
+            >
+              <thead>
+                <tr>
+                  <th style={styles.th}>Raam</th>
+                  <th style={styles.th}>Afmeting</th>
+                  <th style={{ ...styles.th, textAlign: "right" }}>
+                    m&sup2;
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {ramen.map((raam, index) => {
+                  const breedteCm = Math.round(raam.breedteM * 100);
+                  const hoogteCm = Math.round(raam.hoogteM * 100);
+                  const m2 = raam.breedteM * raam.hoogteM;
+                  return (
+                    <tr key={raam.id}>
+                      <td style={styles.td}>
+                        {raam.naam || `Raam ${index + 1}`}
+                      </td>
+                      <td style={styles.td}>
+                        {breedteCm}&times;{hoogteCm} cm
+                      </td>
+                      <td style={{ ...styles.td, textAlign: "right" }}>
+                        {m2.toFixed(2)}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </Section>
 
           <table
             width="100%"
@@ -171,35 +195,41 @@ export function OfferteEmail({ aanvraag, ramen, offerteUrl }: OfferteEmailProps)
                 <td
                   style={{
                     ...styles.totaalLabel,
-                    fontWeight: "bold",
-                    color: kleuren.tekst,
+                    color: INK,
+                    fontFamily: DISPLAY,
+                    fontWeight: "600",
                   }}
                 >
                   Totaal incl. btw
                 </td>
-                <td style={{ ...styles.totaalWaarde, fontWeight: "bold" }}>
+                <td
+                  style={{
+                    ...styles.totaalWaarde,
+                    fontFamily: DISPLAY,
+                    fontSize: "20px",
+                    fontWeight: "700",
+                  }}
+                >
                   {euro(totaal)}
                 </td>
               </tr>
             </tbody>
           </table>
 
-          <Text style={{ ...styles.tekst, color: kleuren.zacht }}>
+          <Text style={{ ...styles.tekst, color: META, fontSize: "13px" }}>
             Geldig tot {nlDatum(geldigTot)}.
           </Text>
 
-          <Section style={{ margin: "24px 0" }}>
+          <Section style={{ margin: "8px 0 24px" }}>
             <Button style={styles.button} href={offerteUrl}>
-              Bekijk en accepteer uw offerte
+              Bekijk en accepteer je offerte
             </Button>
           </Section>
 
-          <Hr style={{ borderColor: kleuren.rand, margin: "24px 0 16px" }} />
-
           <Text style={styles.footer}>
-            Signs.nl &mdash; Spaarneweg 14, Cruquius
+            Signs.nl &mdash; Spaarneweg 14, 2142 EN Cruquius
             <br />
-            020-3242202 &mdash; signs.nl
+            020-324 22 02 &mdash; signs.nl
           </Text>
         </Container>
       </Body>

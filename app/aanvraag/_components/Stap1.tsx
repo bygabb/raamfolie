@@ -36,18 +36,17 @@ export function Stap1({
   ];
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-7">
       <StepIndicator huidigeStap={1} />
 
-      <header className="flex flex-col items-center gap-3 text-center">
-        <h1 className="text-xl font-semibold">Vraag uw raamfolie offerte aan</h1>
-        <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-medium text-emerald-700">
-          Binnen 1 uur tijdens kantooruren
-        </span>
-      </header>
+      <span className="w-fit rounded-full bg-surface-2 px-3.5 py-1.5 text-xs font-medium text-accent-dark">
+        Binnen 1 uur tijdens kantooruren
+      </span>
 
       <section className="flex flex-col gap-3">
-        <h2 className="text-sm font-semibold">Voor wie?</h2>
+        <h2 className="font-display text-base font-semibold text-ink">
+          Voor wie?
+        </h2>
         <div className="grid grid-cols-2 gap-3">
           {klanttypes.map((k) => (
             <TapCard
@@ -62,7 +61,9 @@ export function Stap1({
       </section>
 
       <section className="flex flex-col gap-3">
-        <h2 className="text-sm font-semibold">Wat wilt u bereiken?</h2>
+        <h2 className="font-display text-base font-semibold text-ink">
+          Wat wil je bereiken?
+        </h2>
         <div className="grid grid-cols-2 gap-3">
           {doelen.map((d) => (
             <TapCard
@@ -77,7 +78,9 @@ export function Stap1({
       </section>
 
       <section className="flex flex-col gap-2">
-        <Label htmlFor="postcode">Postcode</Label>
+        <Label htmlFor="postcode" className="text-sm font-medium text-ink">
+          Postcode
+        </Label>
         <Input
           id="postcode"
           inputMode="text"
@@ -102,8 +105,13 @@ export function Stap1({
         )}
       </section>
 
-      <Button size="lg" disabled={!kanVerder} onClick={onVolgende}>
-        Volgende
+      <Button
+        size="lg"
+        className="w-full"
+        disabled={!kanVerder}
+        onClick={onVolgende}
+      >
+        Volgende stap
       </Button>
     </div>
   );

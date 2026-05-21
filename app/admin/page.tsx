@@ -92,13 +92,15 @@ export default async function AdminDashboard({
   ];
 
   return (
-    <main className="mx-auto flex w-full max-w-5xl flex-col gap-6 px-4 py-6">
+    <main className="mx-auto flex w-full max-w-5xl flex-col gap-6 px-4 py-8">
       <header className="flex items-center justify-between">
-        <h1 className="text-xl font-semibold">Aanvragen</h1>
+        <h1 className="font-display text-2xl font-semibold tracking-tight-2 text-ink">
+          Aanvragen
+        </h1>
         <form method="POST" action="/api/admin/logout">
           <button
             type="submit"
-            className="rounded-md border px-3 py-1.5 text-sm font-medium hover:bg-accent"
+            className="rounded-full border border-brand-border px-4 py-2 text-sm font-medium text-ink transition-colors hover:bg-surface-2"
           >
             Uitloggen
           </button>
@@ -107,9 +109,14 @@ export default async function AdminDashboard({
 
       <section className="grid grid-cols-2 gap-3 sm:grid-cols-4">
         {metrics.map((m) => (
-          <div key={m.label} className="rounded-xl border bg-card p-4">
-            <p className="text-xs text-muted-foreground">{m.label}</p>
-            <p className="mt-1 text-xl font-semibold">{m.waarde}</p>
+          <div
+            key={m.label}
+            className="rounded-brand border border-brand-border bg-white p-5"
+          >
+            <p className="text-xs text-meta">{m.label}</p>
+            <p className="mt-1 font-display text-2xl font-semibold text-ink">
+              {m.waarde}
+            </p>
           </div>
         ))}
       </section>
@@ -126,17 +133,17 @@ export default async function AdminDashboard({
               key={pill.waarde}
               href={pill.waarde === "alle" ? "/admin" : `/admin?status=${pill.waarde}`}
               className={cn(
-                "flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm transition-colors",
+                "flex items-center gap-1.5 rounded-full border px-3.5 py-1.5 text-sm transition-colors",
                 actief
-                  ? "border-primary bg-primary/10 font-medium text-primary"
-                  : "hover:bg-accent",
+                  ? "border-ink bg-ink font-medium text-white"
+                  : "border-brand-border text-body hover:bg-surface-2",
               )}
             >
               {pill.label}
               <span
                 className={cn(
                   "rounded-full px-1.5 text-xs",
-                  actief ? "bg-primary/15" : "bg-muted text-muted-foreground",
+                  actief ? "bg-white/20" : "bg-surface-2 text-meta",
                 )}
               >
                 {aantal}
@@ -147,11 +154,11 @@ export default async function AdminDashboard({
       </nav>
 
       {aanvragen.length === 0 ? (
-        <div className="rounded-xl border border-dashed p-10 text-center text-sm text-muted-foreground">
+        <div className="rounded-brand border border-dashed border-brand-border p-12 text-center text-sm text-body">
           Nog geen aanvragen binnen. Tijd om de flyers te verspreiden!
         </div>
       ) : (
-        <div className="overflow-x-auto rounded-xl border">
+        <div className="overflow-x-auto rounded-brand border border-brand-border">
           <Table>
             <TableHeader>
               <TableRow>
@@ -173,12 +180,12 @@ export default async function AdminDashboard({
                 return (
                   <TableRow key={a.id}>
                     <TableCell
-                      className="whitespace-nowrap text-muted-foreground"
+                      className="whitespace-nowrap text-body"
                       title={nlDatumTijd(new Date(a.createdAt))}
                     >
                       {relatieveTijd(new Date(a.createdAt))}
                     </TableCell>
-                    <TableCell className="font-medium">
+                    <TableCell className="font-medium text-ink">
                       {a.voornaam} {a.achternaam}
                     </TableCell>
                     <TableCell>{a.postcode}</TableCell>
@@ -194,7 +201,7 @@ export default async function AdminDashboard({
                     <TableCell className="text-right">
                       <Link
                         href={`/admin/aanvraag/${a.id}`}
-                        className="text-sm font-medium text-primary hover:underline"
+                        className="text-sm font-medium text-link hover:text-link-hover hover:underline"
                       >
                         Bekijken
                       </Link>

@@ -27,8 +27,8 @@ function Kaart({
   children: React.ReactNode;
 }) {
   return (
-    <section className="flex flex-col gap-3 rounded-xl border bg-card p-4">
-      <h2 className="text-sm font-semibold">{titel}</h2>
+    <section className="flex flex-col gap-3 rounded-brand border border-brand-border bg-white p-5">
+      <h2 className="font-display text-sm font-semibold text-ink">{titel}</h2>
       {children}
     </section>
   );
@@ -43,8 +43,8 @@ function Regel({
 }) {
   return (
     <div className="flex justify-between gap-4 text-sm">
-      <span className="text-muted-foreground">{label}</span>
-      <span className="text-right">{children}</span>
+      <span className="text-body">{label}</span>
+      <span className="text-right text-ink">{children}</span>
     </div>
   );
 }
@@ -102,16 +102,16 @@ export default async function AanvraagDetail({
   ];
 
   return (
-    <main className="mx-auto flex w-full max-w-4xl flex-col gap-6 px-4 py-6">
+    <main className="mx-auto flex w-full max-w-4xl flex-col gap-6 px-4 py-8">
       <Link
         href="/admin"
-        className="text-sm text-muted-foreground hover:underline"
+        className="text-sm text-body hover:text-ink hover:underline"
       >
         ← Terug naar alle aanvragen
       </Link>
 
       <header className="flex flex-wrap items-center gap-3">
-        <h1 className="text-xl font-semibold">
+        <h1 className="font-display text-2xl font-semibold tracking-tight-2 text-ink">
           Aanvraag {aanvraag.id.slice(0, 8)} — {aanvraag.voornaam}{" "}
           {aanvraag.achternaam}
         </h1>
@@ -126,7 +126,7 @@ export default async function AanvraagDetail({
           <Regel label="E-mail">
             <a
               href={`mailto:${aanvraag.email}`}
-              className="text-primary hover:underline"
+              className="text-link hover:text-link-hover hover:underline"
             >
               {aanvraag.email}
             </a>
@@ -134,7 +134,7 @@ export default async function AanvraagDetail({
           <Regel label="Telefoon">
             <a
               href={`tel:${aanvraag.telefoon}`}
-              className="text-primary hover:underline"
+              className="text-link hover:text-link-hover hover:underline"
             >
               {aanvraag.telefoon}
             </a>
@@ -144,7 +144,7 @@ export default async function AanvraagDetail({
           </Regel>
           <Regel label="Contactvoorkeur">
             {aanvraag.contactvoorkeur === "whatsapp" ? (
-              <span className="font-medium text-emerald-700">
+              <span className="font-medium text-accent-dark">
                 WhatsApp — bel/app de klant zelf
               </span>
             ) : (
@@ -207,7 +207,7 @@ export default async function AanvraagDetail({
           <Regel label="Markup">{markup != null ? `${markup}×` : "—"}</Regel>
           <Regel label="Klantprijs excl. btw">{euro(klantprijs)}</Regel>
           <Regel label="Btw 21%">{euro(btw)}</Regel>
-          <div className="flex justify-between gap-4 border-t pt-2 text-sm font-semibold">
+          <div className="flex justify-between gap-4 border-t border-brand-border pt-2 text-sm font-semibold text-ink">
             <span>Klantprijs incl. btw</span>
             <span>{euro(totaal)}</span>
           </div>
@@ -217,10 +217,10 @@ export default async function AanvraagDetail({
           <ol className="flex flex-col gap-3">
             {tijdlijn.map((stap, i) => (
               <li key={i} className="flex gap-3">
-                <span className="mt-1.5 size-2 shrink-0 rounded-full bg-primary" />
+                <span className="mt-1.5 size-2 shrink-0 rounded-full bg-accent-dark" />
                 <div className="flex flex-col">
                   <span className="text-sm font-medium">{stap.titel}</span>
-                  <span className="text-xs text-muted-foreground">
+                  <span className="text-xs text-meta">
                     {nlDatumTijd(new Date(stap.datum))}
                     {stap.extra ? ` · ${stap.extra}` : ""}
                   </span>

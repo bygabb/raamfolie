@@ -18,20 +18,19 @@ export function TapCard({
       onClick={onClick}
       aria-pressed={geselecteerd}
       className={cn(
-        "flex flex-col items-center justify-center gap-2 rounded-xl border-2 p-4 text-center transition-colors",
-        "min-h-24 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+        "flex min-h-28 cursor-pointer flex-col items-center justify-center gap-2.5 rounded-brand border-2 bg-surface-2 p-6 text-center transition",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink",
         geselecteerd
-          ? "border-primary bg-primary/5"
-          : "border-border bg-card hover:bg-accent",
+          ? "border-ink"
+          : "border-transparent hover:-translate-y-0.5 hover:shadow-sm",
       )}
     >
       <Icon
-        className={cn(
-          "size-6",
-          geselecteerd ? "text-primary" : "text-muted-foreground",
-        )}
+        className={cn("size-7", geselecteerd ? "text-ink" : "text-body")}
       />
-      <span className="text-sm font-medium">{label}</span>
+      <span className="font-display text-sm font-semibold text-ink">
+        {label}
+      </span>
     </button>
   );
 }

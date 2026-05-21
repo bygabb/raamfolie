@@ -15,6 +15,8 @@ import {
   type IntakeData,
 } from "./types";
 
+const labelKlasse = "text-sm font-medium text-ink";
+
 export function Stap4({
   data,
   update,
@@ -49,16 +51,20 @@ export function Stap4({
     data.privacyAkkoord;
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-7">
       <StepIndicator huidigeStap={4} />
 
       <header className="flex flex-col gap-1">
-        <h1 className="text-xl font-semibold">Uw gegevens</h1>
+        <h2 className="font-display text-2xl font-semibold tracking-tight-2 text-ink">
+          Je gegevens
+        </h2>
       </header>
 
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
         <div className="flex flex-col gap-1.5">
-          <Label htmlFor="voornaam">Voornaam</Label>
+          <Label htmlFor="voornaam" className={labelKlasse}>
+            Je voornaam
+          </Label>
           <Input
             id="voornaam"
             autoComplete="given-name"
@@ -67,7 +73,9 @@ export function Stap4({
           />
         </div>
         <div className="flex flex-col gap-1.5">
-          <Label htmlFor="achternaam">Achternaam</Label>
+          <Label htmlFor="achternaam" className={labelKlasse}>
+            Je achternaam
+          </Label>
           <Input
             id="achternaam"
             autoComplete="family-name"
@@ -78,7 +86,9 @@ export function Stap4({
       </div>
 
       <div className="flex flex-col gap-1.5">
-        <Label htmlFor="email">E-mailadres</Label>
+        <Label htmlFor="email" className={labelKlasse}>
+          Je e-mailadres
+        </Label>
         <Input
           id="email"
           type="email"
@@ -105,7 +115,9 @@ export function Stap4({
       </div>
 
       <div className="flex flex-col gap-1.5">
-        <Label htmlFor="telefoon">Telefoonnummer</Label>
+        <Label htmlFor="telefoon" className={labelKlasse}>
+          Je telefoonnummer
+        </Label>
         <Input
           id="telefoon"
           type="tel"
@@ -134,7 +146,9 @@ export function Stap4({
 
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
         <div className="flex flex-col gap-1.5">
-          <Label htmlFor="straat">Straat</Label>
+          <Label htmlFor="straat" className={labelKlasse}>
+            Straat
+          </Label>
           <Input
             id="straat"
             autoComplete="address-line1"
@@ -143,7 +157,9 @@ export function Stap4({
           />
         </div>
         <div className="flex flex-col gap-1.5">
-          <Label htmlFor="huisnummer">Huisnummer</Label>
+          <Label htmlFor="huisnummer" className={labelKlasse}>
+            Huisnummer
+          </Label>
           <Input
             id="huisnummer"
             value={data.huisnummer}
@@ -153,9 +169,9 @@ export function Stap4({
       </div>
 
       <section className="flex flex-col gap-2">
-        <h2 className="text-sm font-semibold">
-          Hoe wilt u uw offerte ontvangen?
-        </h2>
+        <h3 className="font-display text-base font-semibold text-ink">
+          Hoe wil je je offerte ontvangen?
+        </h3>
         <RadioGroup
           value={data.contactvoorkeur ?? ""}
           onValueChange={(waarde) =>
@@ -164,17 +180,17 @@ export function Stap4({
         >
           <label
             htmlFor="voorkeur-whatsapp"
-            className="flex items-center gap-3 rounded-lg border p-3"
+            className="flex items-center gap-3 rounded-brand border border-brand-border bg-white p-4"
           >
             <RadioGroupItem value="whatsapp" id="voorkeur-whatsapp" />
-            <span className="text-sm">WhatsApp</span>
+            <span className="text-sm text-ink">WhatsApp</span>
           </label>
           <label
             htmlFor="voorkeur-email"
-            className="flex items-center gap-3 rounded-lg border p-3"
+            className="flex items-center gap-3 rounded-brand border border-brand-border bg-white p-4"
           >
             <RadioGroupItem value="email" id="voorkeur-email" />
-            <span className="text-sm">E-mail</span>
+            <span className="text-sm text-ink">E-mail</span>
           </label>
         </RadioGroup>
       </section>
@@ -184,13 +200,14 @@ export function Stap4({
           id="privacy"
           className="mt-0.5"
           checked={data.privacyAkkoord}
-          onCheckedChange={(staat) =>
-            update({ privacyAkkoord: staat === true })
-          }
+          onCheckedChange={(staat) => update({ privacyAkkoord: staat === true })}
         />
-        <span className="text-sm leading-snug">
+        <span className="text-sm leading-snug text-ink">
           Ik ga akkoord met de{" "}
-          <a href="#" className="underline underline-offset-2">
+          <a
+            href="#"
+            className="text-link underline underline-offset-2 hover:text-link-hover"
+          >
             privacyverklaring
           </a>
           .
@@ -198,12 +215,12 @@ export function Stap4({
       </label>
 
       {fout?.type === "buitenbereik" && (
-        <div className="flex flex-col gap-3 rounded-xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">
+        <div className="flex flex-col gap-3 rounded-brand border border-amber-300 bg-amber-50 p-5 text-sm text-amber-900">
           <p>
             Helaas valt postcode {data.postcode || "—"} buiten ons
             verzorgingsgebied (&gt;25 km vanaf Cruquius). Bel ons gerust op{" "}
             <a href="tel:0203242202" className="font-medium underline">
-              020-3242202
+              020-324 22 02
             </a>{" "}
             om de mogelijkheden te bespreken.
           </p>
@@ -220,8 +237,8 @@ export function Stap4({
       )}
 
       {fout?.type === "algemeen" && (
-        <div className="rounded-xl border border-destructive/40 bg-destructive/5 p-4 text-sm text-destructive">
-          Er ging iets mis bij het versturen. Controleer uw verbinding en
+        <div className="rounded-brand border border-destructive/40 bg-destructive/5 p-5 text-sm text-destructive">
+          Er ging iets mis bij het versturen. Controleer je verbinding en
           probeer het opnieuw.
         </div>
       )}

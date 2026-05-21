@@ -9,29 +9,27 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground [a]:hover:bg-primary/80",
+        default:
+          "rounded-full bg-ink text-white font-display font-semibold hover:opacity-90",
         outline:
-          "border-border bg-background hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50",
+          "rounded-full border-2 border-ink bg-transparent text-ink font-display font-semibold hover:bg-ink hover:text-white",
         secondary:
-          "bg-secondary text-secondary-foreground hover:bg-secondary/80 aria-expanded:bg-secondary aria-expanded:text-secondary-foreground",
+          "rounded-full bg-surface-2 text-ink font-display font-semibold hover:bg-surface-2/70",
         ghost:
-          "hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50",
+          "rounded-full hover:bg-surface-2 hover:text-ink aria-expanded:bg-surface-2",
         destructive:
-          "bg-destructive/10 text-destructive hover:bg-destructive/20 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40",
-        link: "text-primary underline-offset-4 hover:underline",
+          "rounded-full border-2 border-destructive/40 bg-destructive/5 text-destructive font-display font-semibold hover:bg-destructive hover:text-white",
+        link: "text-link underline-offset-4 hover:text-link-hover hover:underline",
       },
       size: {
-        default:
-          "h-8 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2",
-        xs: "h-6 gap-1 rounded-[min(var(--radius-md),10px)] px-2 text-xs in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3",
-        sm: "h-7 gap-1 rounded-[min(var(--radius-md),12px)] px-2.5 text-[0.8rem] in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3.5",
-        lg: "h-9 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2",
-        icon: "size-8",
-        "icon-xs":
-          "size-6 rounded-[min(var(--radius-md),10px)] in-data-[slot=button-group]:rounded-lg [&_svg:not([class*='size-'])]:size-3",
-        "icon-sm":
-          "size-7 rounded-[min(var(--radius-md),12px)] in-data-[slot=button-group]:rounded-lg",
-        "icon-lg": "size-9",
+        default: "gap-2 px-7 py-3.5",
+        xs: "h-6 gap-1 rounded-full px-3 text-xs [&_svg:not([class*='size-'])]:size-3",
+        sm: "gap-1.5 rounded-full px-4 py-2 text-[0.8rem] [&_svg:not([class*='size-'])]:size-3.5",
+        lg: "gap-2 px-8 py-4 text-base",
+        icon: "size-9 rounded-full",
+        "icon-xs": "size-6 rounded-full [&_svg:not([class*='size-'])]:size-3",
+        "icon-sm": "size-8 rounded-full",
+        "icon-lg": "size-10 rounded-full",
       },
     },
     defaultVariants: {
