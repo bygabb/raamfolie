@@ -1,0 +1,44 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Aanvraag {
+  id              String   @id @default(cuid())
+  createdAt       DateTime @default(now())
+  klanttype       String
+  doel            String
+  postcode        String
+  afstandKm       Float?
+  hogeRamen       Boolean  @default(false)
+  voornaam        String
+  achternaam      String
+  email           String
+  telefoon        String
+  straat          String
+  huisnummer      String
+  contactvoorkeur String
+  kostprijs       Float?
+  klantprijs      Float?
+  autoQuote       Boolean  @default(false)
+  flags           String   @default("[]")
+  status          String   @default("nieuw")
+  ramen           Raam[]
+}
+
+model Raam {
+  id           String   @id @default(cuid())
+  naam         String?
+  breedteM     Float
+  hoogteM      Float
+  fotoFilename String?
+  aanvraag     Aanvraag @relation(fields: [aanvraagId], references: [id])
+  aanvraagId   String
+}

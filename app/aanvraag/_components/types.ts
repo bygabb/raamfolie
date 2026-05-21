@@ -14,6 +14,7 @@ export type IntakeData = {
   doel: Doel | null;
   postcode: string;
   ramen: Raam[];
+  hogeRamen: boolean;
   voornaam: string;
   achternaam: string;
   email: string;
@@ -37,6 +38,7 @@ export const legeIntake: IntakeData = {
   doel: null,
   postcode: "",
   ramen: [{ breedte: 0, hoogte: 0 }],
+  hogeRamen: false,
   voornaam: "",
   achternaam: "",
   email: "",

@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { Minus, Plus, Camera, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { StepIndicator } from "./StepIndicator";
@@ -196,6 +197,27 @@ export function Stap2({
         <Plus />
         Voeg raam toe
       </Button>
+
+      <div className="flex flex-col gap-2 rounded-xl border bg-card p-4">
+        <label htmlFor="hoge-ramen" className="flex items-start gap-3">
+          <Checkbox
+            id="hoge-ramen"
+            className="mt-0.5"
+            checked={data.hogeRamen}
+            onCheckedChange={(staat) =>
+              update({ hogeRamen: staat === true })
+            }
+          />
+          <span className="text-sm leading-snug">
+            Heeft één van de ramen een bovenkant hoger dan 2,5 meter vanaf de
+            vloer?
+          </span>
+        </label>
+        <p className="pl-7 text-xs text-muted-foreground">
+          Bijvoorbeeld bij een hoog plafond of bovenraam. We komen dan met
+          ladder of steiger.
+        </p>
+      </div>
 
       <div className="flex gap-3">
         <Button variant="outline" className="flex-1" onClick={onVorige}>

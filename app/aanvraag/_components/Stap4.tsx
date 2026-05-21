@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { StepIndicator } from "./StepIndicator";
+import type { VerstuurFout } from "./IntakeWizard";
 import {
   EMAIL_REGEX,
   isGeldigeTelefoon,
@@ -19,11 +20,17 @@ export function Stap4({
   update,
   onVerstuur,
   onVorige,
+  onTerugNaarPostcode,
+  bezig,
+  fout,
 }: {
   data: IntakeData;
   update: (wijziging: Partial<IntakeData>) => void;
   onVerstuur: () => void;
   onVorige: () => void;
+  onTerugNaarPostcode: () => void;
+  bezig: boolean;
+  fout: VerstuurFout;
 }) {
   const [emailFout, setEmailFout] = useState(false);
   const [telefoonFout, setTelefoonFout] = useState(false);
@@ -190,16 +197,54 @@ export function Stap4({
         </span>
       </label>
 
+      {fout?.type === "buitenbereik" && (
+        <div className="flex flex-col gap-3 rounded-xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">
+          <p>
+            Helaas valt postcode {data.postcode || "—"} buiten ons
+            verzorgingsgebied (&gt;25 km vanaf Cruquius). Bel ons gerust op{" "}
+            <a href="tel:0203242202" className="font-medium underline">
+              020-3242202
+            </a>{" "}
+            om de mogelijkheden te bespreken.
+          </p>
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            className="self-start"
+            onClick={onTerugNaarPostcode}
+          >
+            Postcode aanpassen
+          </Button>
+        </div>
+      )}
+
+      {fout?.type === "algemeen" && (
+        <div className="rounded-xl border border-destructive/40 bg-destructive/5 p-4 text-sm text-destructive">
+          Er ging iets mis bij het versturen. Controleer uw verbinding en
+          probeer het opnieuw.
+        </div>
+      )}
+
       <div className="flex gap-3">
-        <Button variant="outline" className="flex-1" onClick={onVorige}>
+        <Button
+          variant="outline"
+          className="flex-1"
+          disabled={bezig}
+          onClick={onVorige}
+        >
           Vorige
         </Button>
         <Button
           className="flex-1"
-          disabled={!kanVersturen}
+          disabled={!kanVersturen || bezig}
           onClick={onVerstuur}
         >
-          Verstuur aanvraag
+          {bezig
+            ? "Versturen…"
+            : fout?.type === "algemeen"
+              ? "Opnieuw versturen"
+              : "Verstuur aanvraag"}
         </Button>
       </div>
     </div>
